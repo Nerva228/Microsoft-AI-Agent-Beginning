@@ -88,9 +88,9 @@ export function renderGuideView(container) {
             <h3 style="margin:0 0 8px;font-size:1.08rem;">${escapeHtml(activePart.part)}</h3>
             <p style="margin:0 0 8px;"><strong>核心職責：</strong>${escapeHtml(activePart.role)}</p>
             <p style="margin:0 0 14px;color:var(--text-secondary);"><strong>代表技術：</strong>${escapeHtml(activePart.example)}</p>
-            <a href="#/lesson/${activePart.lessonId}" class="btn btn--primary btn--sm">
+            <button type="button" data-route="#/lesson/${activePart.lessonId}" class="btn btn--primary btn--sm">
               🎯 前往代表課程：Lesson ${activePart.lessonId} ➔
-            </a>
+            </button>
           </div>
         </div>
 
@@ -110,12 +110,12 @@ export function renderGuideView(container) {
                       ${g.lessonIds
                         .map(
                           (lid) =>
-                            `<a href="#/lesson/${lid}" class="btn btn--sm" style="min-height:32px;padding:4px 10px;">Lesson ${lid}</a>`
+                            `<button type="button" data-route="#/lesson/${lid}" class="btn btn--sm" style="min-height:32px;padding:4px 10px;">Lesson ${lid}</button>`
                         )
                         .join('')}
                       ${
                         firstLesson
-                          ? `<a href="#/lesson/${firstLesson.id}" class="btn btn--primary btn--sm" style="margin-left:auto;">從第 ${firstLesson.id} 課開始 ▶</a>`
+                          ? `<button type="button" data-route="#/lesson/${firstLesson.id}" class="btn btn--primary btn--sm" style="margin-left:auto;">從第 ${firstLesson.id} 課開始 ▶</button>`
                           : ''
                       }
                     </div>

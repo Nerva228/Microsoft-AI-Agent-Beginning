@@ -23,9 +23,25 @@ const NAV_ITEMS = [
   { id: 'profile', href: '#/profile', icon: '🏆', label: '成就與同步' }
 ];
 
+// Hybrid in-memory + URL hash route state so navigation works in both sandboxed srcdoc iframes and GitHub Pages!
+let currentRouteHash = window.location.hash && window.location.hash.startsWith('#/')
+  ? window.location.hash
+  : '#/map';
+
+function navigateTo(hash) {
+  currentRouteHash = hash;
+  try {
+    if (window.location.hash !== hash) {
+      window.history.replaceState(null, '', hash);
+    }
+  } catch {
+    // Sandboxed about:srcdoc iframes may disallow history.replaceState; in-memory state handles it seamlessly
+  }
+  renderRoute();
+}
+
 function parseRoute() {
-  const hash = window.location.hash || '#/map';
-  const clean = hash.replace(/^#\/?/, '');
+  const clean = (currentRouteHash || '#/map').replace(/^#\/?/, '');
   const parts = clean.split('/');
 
   if (parts[0] === 'lesson' && parts[1]) {
@@ -44,13 +60,13 @@ function renderChrome() {
   const route = parseRoute();
 
   topBarEl.innerHTML = `
-    <a href="#/map" class="brand-cluster" aria-label="回到 AI Agent 闖關地圖首頁">
+    <button type="button" data-route="#/map" class="brand-cluster" style="border:none;background:transparent;padding:0;cursor:pointer;text-align:left;" aria-label="回到 AI Agent 闖關地圖首頁">
       <img src="./icons/icon-192.png" alt="" class="brand-logo" />
       <div class="brand-titles">
         <span class="brand-name">AI Agent 闖關學</span>
         <span class="brand-rank">${rank.emoji} ${escapeHtml(rank.title)}</span>
       </div>
-    </a>
+    </button>
 
     <div class="hud-stats">
       <span class="hud-chip hud-chip--streak" title="連續學習天數">🔥 ${st.streak}</span>
@@ -72,15 +88,16 @@ function renderChrome() {
   const activeNavId = route.view === 'lesson' ? 'map' : route.view;
   bottomNavEl.innerHTML = NAV_ITEMS.map(
     (item) => `
-    <a
-      href="${item.href}"
+    <button
+      type="button"
       id="nav-tab-${item.id}"
+      data-route="${item.href}"
       class="nav-tab ${activeNavId === item.id ? 'is-active' : ''}"
       aria-current="${activeNavId === item.id ? 'page' : 'false'}"
     >
       <span class="nav-tab-icon" aria-hidden="true">${item.icon}</span>
       <span>${escapeHtml(item.label)}</span>
-    </a>`
+    </button>`
   ).join('');
 }
 
@@ -103,11 +120,37 @@ function renderRoute() {
   window.scrollTo({ top: 0, behavior: 'instant' });
 }
 
+// Intercept all internal route clicks in capture phase so sandboxed preview iframes never swallow <a href="#/...">!
+document.addEventListener(
+  'click',
+  (e) => {
+    const routeBtn = e.target.closest('[data-route]');
+    if (routeBtn) {
+      e.preventDefault();
+      navigateTo(routeBtn.getAttribute('data-route'));
+      return;
+    }
+    const anchor = e.target.closest('a[href^="#/"]');
+    if (anchor) {
+      e.preventDefault();
+      e.stopPropagation();
+      navigateTo(anchor.getAttribute('href'));
+    }
+  },
+  true
+);
+
 subscribe(() => {
   renderChrome();
 });
 
-window.addEventListener('hashchange', renderRoute);
+window.addEventListener('hashchange', () => {
+  if (window.location.hash && window.location.hash.startsWith('#/') && window.location.hash !== currentRouteHash) {
+    currentRouteHash = window.location.hash;
+    renderRoute();
+  }
+});
+
 initLightboxEvents();
 renderRoute();
 

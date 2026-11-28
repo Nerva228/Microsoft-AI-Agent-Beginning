@@ -6,6 +6,7 @@ export function renderFlowSimulator(container, lesson) {
   let scenarioIdx = 0;
   let stepIdx = 0;
   let autoTimer = null;
+  const seenSteps = new Set([0]);
 
   function stopAuto() {
     if (autoTimer) {
@@ -18,15 +19,16 @@ export function renderFlowSimulator(container, lesson) {
     const scenario = sim.scenarios[scenarioIdx];
     const steps = scenario.steps;
     const currentStep = steps[stepIdx];
+    seenSteps.add(stepIdx);
     const visitedNodes = new Set(steps.slice(0, stepIdx + 1).map((s) => s.activeNode));
 
-    if (stepIdx === steps.length - 1) {
+    if (stepIdx === steps.length - 1 || seenSteps.size >= steps.length) {
       completeActivity(lesson.id, 'simDone', 25, `完成第 ${lesson.id} 課動態流程模擬`);
     }
 
     container.innerHTML = `
       <section class="sim-box" aria-label="動態 Agent 流程模擬器">
-        <div class="section-eyebrow">⚡ 互動模擬器 · Step ${stepIdx + 1} / ${steps.length}</div>
+        <div class="section-eyebrow">⚡ 互動模擬器 · 可直接點擊任意節點或步驟文字切換（${stepIdx + 1} / ${steps.length}）</div>
         <h2 style="margin:0 0 6px;font-size:1.18rem;">${escapeHtml(sim.title)}</h2>
         <p style="margin:0 0 12px;color:var(--text-secondary);font-size:0.9rem;">${escapeHtml(sim.description)}</p>
 
@@ -48,16 +50,38 @@ export function renderFlowSimulator(container, lesson) {
             : ''
         }
 
-        <div class="sim-nodes-track">
+        <div class="sim-nodes-track" role="tablist" aria-label="點選架構節點">
           ${sim.nodes
             .map((node) => {
               const isCurrent = node.id === currentStep.activeNode;
               const isVisited = visitedNodes.has(node.id);
+              const targetStepIdx = steps.findIndex((s) => s.activeNode === node.id);
               return `
-                <div class="sim-node ${isCurrent ? 'is-current' : ''} ${isVisited ? 'is-visited' : ''}">
+                <button
+                  type="button"
+                  class="sim-node ${isCurrent ? 'is-current' : ''} ${isVisited ? 'is-visited' : ''}"
+                  data-node-step="${targetStepIdx >= 0 ? targetStepIdx : 0}"
+                  ${targetStepIdx < 0 ? 'disabled style="opacity:0.45;cursor:default;"' : ''}
+                >
                   <span class="sim-node-icon">${escapeHtml(node.icon)}</span>
                   <span class="sim-node-label">${escapeHtml(node.label)}</span>
-                </div>
+                </button>
+              `;
+            })
+            .join('')}
+        </div>
+
+        <div class="sim-step-list" role="tablist" aria-label="直接點選文字步驟">
+          ${steps
+            .map((st, idx) => {
+              const shortTitle = st.badge.includes('·') ? st.badge.split('·')[1].trim() : st.badge;
+              return `
+                <button
+                  type="button"
+                  id="sim-step-jump-${idx}"
+                  class="sim-step-pill ${idx === stepIdx ? 'is-active' : ''}"
+                  data-step-jump="${idx}"
+                >${idx + 1}. ${escapeHtml(shortTitle)}</button>
               `;
             })
             .join('')}
@@ -87,6 +111,23 @@ export function renderFlowSimulator(container, lesson) {
         stopAuto();
         scenarioIdx = Number(btn.getAttribute('data-sc'));
         stepIdx = 0;
+        seenSteps.clear();
+        render();
+      });
+    });
+
+    container.querySelectorAll('[data-node-step]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        stopAuto();
+        stepIdx = Number(btn.getAttribute('data-node-step'));
+        render();
+      });
+    });
+
+    container.querySelectorAll('[data-step-jump]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        stopAuto();
+        stepIdx = Number(btn.getAttribute('data-step-jump'));
         render();
       });
     });

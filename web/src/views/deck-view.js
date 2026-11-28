@@ -117,9 +117,9 @@ export function renderDeckView(container) {
                                   💡 ${escapeHtml(fc.example)}
                                 </div>
                               </div>
-                              <a href="#/lesson/${fc.lessonId}" style="font-size:0.78rem;font-weight:800;">
+                              <button type="button" data-route="#/lesson/${fc.lessonId}" style="border:none;background:transparent;padding:0;cursor:pointer;color:var(--brand-text);font-size:0.78rem;font-weight:800;text-align:left;">
                                 前往第 ${fc.lessonId} 課 ➔
-                              </a>
+                              </button>
                             </div>
                           </div>
                         </div>

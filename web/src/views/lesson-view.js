@@ -52,7 +52,7 @@ export function renderLessonView(container, lessonId, initialStage = 'overview')
     container.innerHTML = `
       <article aria-labelledby="lesson-main-title">
         <div class="lesson-topbar">
-          <a href="#/map" id="back-to-map-btn" class="btn btn--sm">← 返回地圖</a>
+          <button type="button" data-route="#/map" id="back-to-map-btn" class="btn btn--sm">← 返回地圖</button>
           <span class="tag-pill">Lesson ${lesson.id} · 約 ${lesson.estimatedMinutes} 分鐘 · +${lesson.xpReward} XP</span>
         </div>
 
@@ -92,13 +92,13 @@ export function renderLessonView(container, lessonId, initialStage = 'overview')
           <div style="display:flex;justify-content:space-between;width:100%;gap:10px;">
             ${
               prev
-                ? `<a href="#/lesson/${prev.id}" class="btn btn--sm">◀ 上一課 (${prev.id})</a>`
+                ? `<button type="button" data-route="#/lesson/${prev.id}" class="btn btn--sm">◀ 上一課 (${prev.id})</button>`
                 : `<span></span>`
             }
             ${
               next
-                ? `<a href="#/lesson/${next.id}" class="btn btn--sm">下一課 (${next.id}) ▶</a>`
-                : `<a href="#/profile" class="btn btn--amber btn--sm">👑 查看畢業成就</a>`
+                ? `<button type="button" data-route="#/lesson/${next.id}" class="btn btn--sm">下一課 (${next.id}) ▶</button>`
+                : `<button type="button" data-route="#/profile" class="btn btn--amber btn--sm">👑 查看畢業成就</button>`
             }
           </div>
         </footer>

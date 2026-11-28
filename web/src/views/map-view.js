@@ -55,10 +55,10 @@ export function renderMapView(container) {
         </div>
 
         <div style="display:flex;gap:10px;flex-wrap:wrap;">
-          <a href="#/lesson/${nextUnfinished.id}" id="hero-continue-btn" class="btn btn--primary" style="flex:1;">
+          <button type="button" data-route="#/lesson/${nextUnfinished.id}" id="hero-continue-btn" class="btn btn--primary" style="flex:1;">
             🚀 立即進入第 ${nextUnfinished.id} 課（約 ${nextUnfinished.estimatedMinutes} 分鐘）
-          </a>
-          <a href="#/deck" class="btn">🃏 通勤刷單字卡</a>
+          </button>
+          <button type="button" data-route="#/deck" class="btn">🃏 通勤刷單字卡</button>
         </div>
       </div>
 
@@ -111,8 +111,9 @@ export function renderMapView(container) {
                   const isDimmed = highlightSet ? !highlightSet.has(lesson.id) : false;
 
                   return `
-                    <a
-                      href="#/lesson/${lesson.id}"
+                    <button
+                      type="button"
+                      data-route="#/lesson/${lesson.id}"
                       id="quest-node-${lesson.id}"
                       class="quest-node ${completed ? 'is-completed' : ''} ${
                         isHighlighted ? 'is-highlighted' : ''
@@ -136,7 +137,7 @@ export function renderMapView(container) {
                           </span>
                         </div>
                       </div>
-                    </a>
+                    </button>
                   `;
                 })
                 .join('')}

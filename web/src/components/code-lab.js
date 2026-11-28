@@ -9,9 +9,10 @@ export function renderCodeLab(container, lesson) {
   let selectedLine = 0;
   let showOutput = false;
   let filledSlots = Array(puzzle.answers.length).fill(null);
+  let slotStatuses = Array(puzzle.answers.length).fill(null); // null | 'correct' | 'wrong'
   let checkedState = null; // null | 'pass' | 'fail'
 
-  // Deterministic shuffle based on lesson ID so tokens don't jump around on re-render
+  // Deterministic shuffle based on lesson ID
   const rawTokens = [...puzzle.answers, ...puzzle.distractors].map((text, idx) => ({
     id: `tok-${idx}`,
     text
@@ -32,9 +33,24 @@ export function renderCodeLab(container, lesson) {
         const chunk = escapeHtml(part);
         if (idx >= puzzle.answers.length) return chunk;
         const slotVal = filledSlots[idx];
-        return `${chunk}<button type="button" id="puzzle-slot-${idx}" class="puzzle-slot ${
-          slotVal ? 'is-filled' : ''
-        }" data-slot="${idx}">${slotVal ? escapeHtml(slotVal.text) : `空格 ${idx + 1}`}</button>`;
+        const status = slotStatuses[idx];
+
+        let stateClass = '';
+        let prefix = '';
+        if (status === 'correct') {
+          stateClass = 'is-correct';
+          prefix = '✓ ';
+        } else if (status === 'wrong') {
+          stateClass = 'is-wrong';
+          prefix = '✕ ';
+        } else if (slotVal) {
+          stateClass = 'is-filled';
+        }
+
+        const isLocked = status === 'correct';
+        return `${chunk}<button type="button" id="puzzle-slot-${idx}" class="puzzle-slot ${stateClass}" data-slot="${idx}" ${
+          isLocked ? 'disabled title="已答對鎖定"' : ''
+        }>${prefix}${slotVal ? escapeHtml(slotVal.text) : `空格 ${idx + 1}`}</button>`;
       })
       .join('');
 
@@ -93,7 +109,7 @@ export function renderCodeLab(container, lesson) {
           <div class="section-eyebrow">🧩 免打字點選拼圖挑戰（+35 XP）</div>
           <p style="margin:0 0 10px;font-weight:700;">${escapeHtml(puzzle.instruction)}</p>
           <p style="margin:0 0 10px;font-size:0.82rem;color:var(--text-muted);">
-            👆 點選下方詞彙積木即可自動填入空格；點選已填入的空格可退回重選。
+            👆 點選下方積木填入空格；檢查答案後，<strong>答對會加綠框鎖定</strong>，<strong>答錯會標紅框</strong>（點紅框即可退回重選）。
           </p>
 
           <div class="puzzle-template">${puzzleHtml}</div>
@@ -114,18 +130,24 @@ export function renderCodeLab(container, lesson) {
           </div>
 
           <div style="display:flex;gap:8px;margin-top:14px;flex-wrap:wrap;">
-            <button type="button" id="puzzle-check-btn" class="btn btn--primary btn--sm">✨ 檢查拼圖答案</button>
-            <button type="button" id="puzzle-clear-btn" class="btn btn--sm">↺ 清空重填</button>
+            <button type="button" id="puzzle-check-btn" class="btn btn--primary btn--sm" ${
+              checkedState === 'pass' ? 'disabled' : ''
+            }>✨ 檢查拼圖答案</button>
+            ${
+              checkedState === 'pass'
+                ? ''
+                : `<button type="button" id="puzzle-clear-btn" class="btn btn--sm">↺ 退回未鎖定空格</button>`
+            }
           </div>
 
           ${
             checkedState === 'pass'
               ? `<div class="feedback-callout is-good">
-                  <strong>🎉 拼圖完全正確！</strong> ${escapeHtml(puzzle.successNote)}
+                  <strong>🎉 拼圖全數綠框鎖定過關！</strong> ${escapeHtml(puzzle.successNote)}
                 </div>`
               : checkedState === 'fail'
                 ? `<div class="feedback-callout is-warn">
-                    <strong>🤔 還有空格沒填對喔！</strong> 點擊上方已填入的綠框空格可以退回詞彙再試一次！
+                    <strong>🔍 已標記檢查結果：</strong> 綠框（✓）代表正確並已鎖定；請點擊<strong>紅框（✕）空格</strong>退回錯誤詞彙再挑一次！
                   </div>`
                 : ''
           }
@@ -148,9 +170,12 @@ export function renderCodeLab(container, lesson) {
     container.querySelectorAll('[data-slot]').forEach((btn) => {
       btn.addEventListener('click', () => {
         const idx = Number(btn.getAttribute('data-slot'));
+        // Locked correct slots cannot be returned!
+        if (slotStatuses[idx] === 'correct') return;
         if (filledSlots[idx]) {
           filledSlots[idx] = null;
-          checkedState = null;
+          slotStatuses[idx] = null;
+          if (checkedState === 'fail') checkedState = null;
           render();
         }
       });
@@ -160,25 +185,42 @@ export function renderCodeLab(container, lesson) {
       btn.addEventListener('click', () => {
         const tokId = btn.getAttribute('data-tok');
         const tokObj = bank.find((t) => t.id === tokId);
-        const emptyIdx = filledSlots.findIndex((s) => s === null);
-        if (!tokObj || emptyIdx === -1) return;
-        filledSlots[emptyIdx] = tokObj;
-        checkedState = null;
+        if (!tokObj) return;
+        // Find first empty non-locked slot, or if all slots have values, replace the first 'wrong' slot!
+        let targetIdx = filledSlots.findIndex((s, i) => s === null && slotStatuses[i] !== 'correct');
+        if (targetIdx === -1) {
+          targetIdx = slotStatuses.findIndex((st) => st === 'wrong');
+        }
+        if (targetIdx === -1) return;
+        filledSlots[targetIdx] = tokObj;
+        slotStatuses[targetIdx] = null;
+        if (checkedState === 'fail') checkedState = null;
         render();
       });
     });
 
     container.querySelector('#puzzle-clear-btn')?.addEventListener('click', () => {
-      filledSlots = Array(puzzle.answers.length).fill(null);
+      for (let i = 0; i < filledSlots.length; i++) {
+        if (slotStatuses[i] !== 'correct') {
+          filledSlots[i] = null;
+          slotStatuses[i] = null;
+        }
+      }
       checkedState = null;
       render();
     });
 
     container.querySelector('#puzzle-check-btn')?.addEventListener('click', () => {
-      const isComplete = filledSlots.every(Boolean);
-      const isCorrect =
-        isComplete && filledSlots.every((tok, i) => tok.text === puzzle.answers[i]);
-      if (isCorrect) {
+      let allRight = true;
+      for (let i = 0; i < puzzle.answers.length; i++) {
+        if (filledSlots[i] && filledSlots[i].text === puzzle.answers[i]) {
+          slotStatuses[i] = 'correct';
+        } else {
+          slotStatuses[i] = 'wrong';
+          allRight = false;
+        }
+      }
+      if (allRight) {
         checkedState = 'pass';
         completeActivity(lesson.id, 'puzzleDone', 35, `解開第 ${lesson.id} 課程式碼拼圖`);
       } else {

@@ -146,8 +146,8 @@ export function renderFlashcardsAndQuiz(container, lesson) {
                     <button type="button" id="quiz-retry-btn" class="btn btn--sm">↺ 重新挑戰衝 3 顆星</button>
                     ${
                       next
-                        ? `<a href="#/lesson/${next.id}" id="next-lesson-cta" class="btn btn--primary btn--sm">🚀 前往下一課：Lesson ${next.id} ➔</a>`
-                        : `<a href="#/profile" class="btn btn--amber btn--sm">👑 查看全課程畢業徽章！</a>`
+                        ? `<button type="button" data-route="#/lesson/${next.id}" id="next-lesson-cta" class="btn btn--primary btn--sm">🚀 前往下一課：Lesson ${next.id} ➔</button>`
+                        : `<button type="button" data-route="#/profile" class="btn btn--amber btn--sm">👑 查看全課程畢業徽章！</button>`
                     }
                   </div>
                 </div>`
