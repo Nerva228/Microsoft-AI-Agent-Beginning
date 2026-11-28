@@ -27,7 +27,7 @@ export const LESSONS_W3 = [
           '延遲與成本失控：某個子代理不小心陷入 8 輪重試，單次對話成本暴增 15 倍。'
         ],
         image: {
-          src: './course-images/lesson-10-thumbnail.2b79a30773db093e.webp',
+          src: './course-images/lesson-10-thumbnail.png',
           caption: '從實驗室走向企業級生產環境，可觀測性（Observability）與持續評估是生命線'
         }
       },
@@ -243,7 +243,7 @@ export const LESSONS_W3 = [
           'MCP Server 標準化暴露三種能力：Tools（可執行動作）、Resources（唯讀文件資料）與 Prompts（預設範本）。寫一次 Server，所有支援 MCP 的 Agent 都能即插即用！'
         ],
         image: {
-          src: './course-images/mcp-diagram.e4ca1cbd551444a1.webp',
+          src: './course-images/mcp-diagram.png',
           caption: '點圖放大：MCP 讓 Host / Client 透過統一協定連接各種外部工具與資料庫 Server'
         }
       },
@@ -256,7 +256,7 @@ export const LESSONS_W3 = [
           '不必暴露內部私有記憶或原始程式碼，跨系統 Agent 就能安全派發長時任務、回報進度與交換成果（Artifacts）！'
         ],
         image: {
-          src: './course-images/A2A-Diagram.8666928d648acc26.webp',
+          src: './course-images/A2A-Diagram.png',
           caption: 'A2A 協定讓分屬不同平台或組織的獨立 Agent 能互相發現能力並協同辦事'
         }
       },
@@ -265,7 +265,7 @@ export const LESSONS_W3 = [
         title: 'NLWeb (Natural Language Web)：讓每個網站原生變成「可對話的 MCP 知識節點」！',
         body: '由微軟推動的開源專案 NLWeb，善用網站原本就有的 Schema.org、RSS 等結構化標記，讓任何電商、食譜或新聞網站輕鬆開出自然語言問答端點，同時每個 NLWeb 實例本身就是一台標準 MCP Server！',
         image: {
-          src: './course-images/nlweb-diagram.c1e2390b310e5fe4.webp',
+          src: './course-images/nlweb-diagram.png',
           caption: 'NLWeb 結合網站既有 Schema.org 結構化資料與向量索引，同時服務人類與 AI Agent'
         }
       }
@@ -460,7 +460,7 @@ export const LESSONS_W3 = [
         title: '從 Prompt Engineering 到 Context Engineering（脈絡工程）',
         body: '如果說 Prompt Engineering 是「把一句指令寫漂亮」；那 Context Engineering 就是「在每次呼叫模型的那一瞬間，精準決定哪些系統指令、歷史摘要、檢索片段與工具回傳該放進有限的注意力視窗（Context Window），又有哪些雜訊必須丟掉！」',
         image: {
-          src: './course-images/context-types.fc10b8927ee43f06.webp',
+          src: './course-images/context-types.png',
           caption: '點圖放大：構成 Agent 脈絡的多種來源——指令、對話歷史、工具結果、記憶與外部知識'
         }
       },
@@ -484,7 +484,7 @@ export const LESSONS_W3 = [
           '子代理脈絡隔離（Sub-agent Isolation）：讓子代理去讀完 30 頁長文，只把 300 字結論傳回主代理，保持主視窗乾淨清爽！'
         ],
         image: {
-          src: './course-images/best-practices.f4170873dc554f58.webp',
+          src: './course-images/best-practices.png',
           caption: 'Context Engineering 最佳實踐：精選、壓縮與隔離高信噪比資訊'
         }
       }
@@ -683,7 +683,7 @@ export const LESSONS_W3 = [
           'Procedural Memory（程序技能記憶）：記住做事的標準 SOP 流程與從回饋中學到的慣例。'
         ],
         image: {
-          src: './course-images/lesson-13-thumbnail.959e3bc52d210c64.webp',
+          src: './course-images/lesson-13-thumbnail.png',
           caption: '結構化記憶系統讓 AI Agent 從一次性工具進化為越用越懂你的個人化夥伴'
         }
       },
@@ -888,7 +888,7 @@ export const LESSONS_W3 = [
           'Workflows（確定性圖形管線）：透過 WorkflowBuilder 把多個 Agent 與純 Python 函式用有向圖（Edges）串起來，保證流程可預測、好測試！'
         ],
         image: {
-          src: './course-images/framework-intro.077af16617cf130c.webp',
+          src: './course-images/framework-intro.png',
           caption: '點圖放大：Microsoft Agent Framework 統一了單一代理與複雜多步驟圖形工作流'
         }
       },
@@ -901,7 +901,7 @@ export const LESSONS_W3 = [
           '計算每次工具呼叫耗時、統一檢查權限、或實作快取短路（Short-circuit）回傳！'
         ],
         image: {
-          src: './course-images/agent-components.410a06daf87b4fef.webp',
+          src: './course-images/agent-components.png',
           caption: 'MAF 代理核心組件：模型提供者、指令、工具、記憶與 Middleware 攔截管線'
         }
       },

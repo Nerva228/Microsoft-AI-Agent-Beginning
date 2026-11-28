@@ -155,7 +155,31 @@ initLightboxEvents();
 renderRoute();
 
 if ('serviceWorker' in navigator && window.location.protocol.startsWith('http')) {
+  let hasActiveController = Boolean(navigator.serviceWorker.controller);
+  let isReloading = false;
+
+  navigator.serviceWorker.addEventListener('controllerchange', () => {
+    if (!hasActiveController) {
+      hasActiveController = true;
+      return;
+    }
+    if (isReloading) return;
+    isReloading = true;
+    window.location.reload();
+  });
+
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('./sw.js').catch(() => {});
+    navigator.serviceWorker
+      .register('./sw.js', { updateViaCache: 'none' })
+      .then((reg) => {
+        reg.update().catch(() => {});
+        document.addEventListener('visibilitychange', () => {
+          if (document.visibilityState === 'visible') {
+            reg.update().catch(() => {});
+          }
+        });
+      })
+      .catch(() => {});
   });
 }
+

@@ -91,13 +91,14 @@ export function renderProfileView(container) {
         </div>
 
         <div class="card">
-          <div class="section-eyebrow">🔄 進度備份碼（解決換手機或 iOS 加入主畫面後進度轉移）</div>
-          <h2 style="margin:0 0 8px;font-size:1.12rem;">免註冊帳號，一鍵複製／貼上同步學習紀錄</h2>
+          <div class="section-eyebrow">🔄 App 同步更新與進度備份碼（v1.1.0）</div>
+          <h2 style="margin:0 0 8px;font-size:1.12rem;">保留進度自動更新 ＋ 跨裝置備份碼</h2>
           <p style="margin:0 0 10px;font-size:0.85rem;color:var(--text-secondary);">
-            小提醒：iPhone 從 Safari 加入主畫面後，桌面圖示擁有獨立儲存空間。只需在這裡點「複製備份碼」，打開桌面 App 後貼上匯入，XP 與徽章一秒無損搬家！
+            版本更新只會刷新介面與課程圖表快取，你的 XP、連續天數與通關紀錄皆安全保存在本機 <code>localStorage</code>（請勿移除桌面 App 圖示）。若想跨裝置轉移，可使用下方備份碼。
           </p>
 
           <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;">
+            <button type="button" id="check-pwa-update-btn" class="btn btn--sm">🔄 檢查最新版本</button>
             <button type="button" id="copy-sync-code-btn" class="btn btn--primary btn--sm">📋 一鍵複製目前進度備份碼</button>
           </div>
 
@@ -131,6 +132,28 @@ export function renderProfileView(container) {
         </div>
       </section>
     `;
+
+    container.querySelector('#check-pwa-update-btn')?.addEventListener('click', async () => {
+      if (!('serviceWorker' in navigator)) {
+        window.location.reload();
+        return;
+      }
+      try {
+        const reg = await navigator.serviceWorker.getRegistration();
+        if (!reg) {
+          window.location.reload();
+          return;
+        }
+        await reg.update();
+        if (reg.installing || reg.waiting) {
+          showToast('🚀 發現新版本，正在自動更新並保留學習進度…');
+        } else {
+          showToast('✅ 目前已是最新版本（v1.1.0），學習進度完整保留！');
+        }
+      } catch {
+        showToast('⚠️ 無法連線檢查更新，請確認網路後再試。');
+      }
+    });
 
     container.querySelector('#copy-sync-code-btn')?.addEventListener('click', async () => {
       try {
