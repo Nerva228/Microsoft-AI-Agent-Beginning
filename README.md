@@ -1,5 +1,8 @@
 # AI Agents for Beginners - A Course
 
+> ### 🎮 [點此開啟「AI Agent 繁中互動闖關學習網」（支援手機 PWA 離線學習）](https://nerva228.github.io/Microsoft-AI-Agent-Beginning/)
+> 專為行動閱讀與台灣繁體中文學習者打造！將全套 00–18 共 19 堂課化為**技能樹闖關地圖、動態 Agent 流程模擬器、AI 架構師情境挑戰、免打字 Python/MAF 程式碼拼圖與 3D 術語翻牌卡**，內嵌官方教學影片並支援手機「加入主畫面」。
+
 ![AI Agents for Beginners](./images/repo-thumbnailv3.png)
 
 ## A course teaching everything you need to know to start building AI Agents

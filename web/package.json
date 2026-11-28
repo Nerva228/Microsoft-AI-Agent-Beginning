@@ -1,0 +1,14 @@
+{
+  "name": "ai-agent-quest-tw",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "AI Agent 繁中互動闖關學習網 — Microsoft AI Agents for Beginners (00-18) 台灣繁體中文行動學習版",
+  "scripts": {
+    "sync-assets": "node scripts/sync-assets.mjs",
+    "validate": "node scripts/validate-content.mjs",
+    "build": "node scripts/sync-assets.mjs && node scripts/validate-content.mjs && node scripts/build.mjs",
+    "dev": "node scripts/sync-assets.mjs && node scripts/serve.mjs --dir .",
+    "preview": "node scripts/serve.mjs --dir dist"
+  }
+}

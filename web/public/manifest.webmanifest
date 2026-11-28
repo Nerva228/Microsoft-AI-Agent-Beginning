@@ -1,0 +1,26 @@
+{
+  "name": "AI Agent 互動闖關學習網（台灣繁中版）",
+  "short_name": "Agent 闖關學",
+  "description": "Microsoft AI Agents for Beginners (00-18) 台灣繁體中文行動互動闖關課程",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#f9f7f2",
+  "theme_color": "#1c9368",
+  "lang": "zh-Hant-TW",
+  "icons": [
+    {
+      "src": "./icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "./icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

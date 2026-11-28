@@ -1,0 +1,217 @@
+.app-shell {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Sticky Top Header */
+.top-bar {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  min-height: var(--topbar-h);
+  padding: env(safe-area-inset-top, 0px) 14px 0;
+  background: var(--bg-surface);
+  border-bottom: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.brand-cluster {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: var(--text-primary);
+  min-width: 0;
+}
+
+.brand-logo {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  flex-shrink: 0;
+  box-shadow: 0 2px 5px hsla(0, 0%, 0%, 0.14);
+}
+
+.brand-titles {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.brand-name {
+  font-size: 0.95rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.brand-rank {
+  font-size: 0.74rem;
+  color: var(--text-muted);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.hud-stats {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.hud-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 10px;
+  border-radius: var(--radius-pill);
+  font-size: 0.8rem;
+  font-weight: 700;
+  background: var(--bg-subtle);
+  border: 1px solid var(--border-subtle);
+  white-space: nowrap;
+}
+
+.hud-chip--xp {
+  background: var(--amber-soft);
+  color: var(--amber-text);
+  border-color: transparent;
+}
+
+.hud-chip--streak {
+  background: var(--brand-soft);
+  color: var(--brand-text);
+  border-color: transparent;
+}
+
+.theme-toggle-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-subtle);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 1.05rem;
+  transition: transform 0.15s var(--ease-out), background 0.15s ease;
+}
+
+.theme-toggle-btn:active {
+  transform: scale(0.93);
+}
+
+/* Main Stage */
+.main-stage {
+  flex: 1;
+  width: 100%;
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 18px 14px calc(var(--bottomnav-h) + env(safe-area-inset-bottom, 0px) + 26px);
+  outline: none;
+}
+
+/* Mobile Bottom Thumb Navigation */
+.bottom-nav {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 45;
+  background: var(--bg-surface);
+  border-top: 1px solid var(--border-subtle);
+  padding: 6px 8px calc(6px + env(safe-area-inset-bottom, 0px));
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 4px;
+}
+
+.nav-tab {
+  min-height: 48px;
+  border: none;
+  background: transparent;
+  border-radius: var(--radius-sm);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  cursor: pointer;
+  color: var(--text-muted);
+  font-size: 0.73rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: color 0.15s ease, background 0.15s ease;
+}
+
+.nav-tab-icon {
+  font-size: 1.2rem;
+  line-height: 1.1;
+}
+
+.nav-tab.is-active {
+  color: var(--brand-text);
+  background: var(--brand-soft);
+}
+
+/* Desktop & Tablet Wide Layout (> 880px) */
+@media (min-width: 880px) {
+  .top-bar {
+    padding-left: 28px;
+    padding-right: 28px;
+  }
+
+  .app-shell {
+    padding-left: 220px;
+  }
+
+  .top-bar {
+    margin-left: -220px;
+  }
+
+  .bottom-nav {
+    top: var(--topbar-h);
+    bottom: 0;
+    left: 0;
+    right: auto;
+    width: 220px;
+    border-top: none;
+    border-right: 1px solid var(--border-subtle);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 18px 12px;
+    gap: 8px;
+  }
+
+  .nav-tab {
+    flex-direction: row;
+    justify-content: flex-start;
+    padding: 12px 14px;
+    font-size: 0.92rem;
+    gap: 10px;
+  }
+
+  .main-stage {
+    padding: 28px 28px 56px;
+    max-width: 880px;
+  }
+}
+
+@media (max-width: 390px) {
+  .brand-rank {
+    display: none;
+  }
+  .hud-chip {
+    padding: 4px 8px;
+    font-size: 0.75rem;
+  }
+}

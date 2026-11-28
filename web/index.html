@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <title>AI Agent 互動闖關學習網｜Microsoft AI Agents for Beginners 台灣繁中版</title>
+    <meta
+      name="description"
+      content="專為手機隨時隨地學習打造的 AI Agent 繁體中文互動闖關網站。涵蓋 Microsoft AI Agents for Beginners 全部 19 堂課（00-18），提供動態流程模擬器、架構師情境挑戰、Python/MAF 程式碼拼圖與術語翻牌卡。"
+    />
+    <meta name="theme-color" content="#f9f7f2" id="meta-theme-color" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="Agent 闖關學" />
+
+    <link rel="icon" type="image/png" href="./icons/favicon-64.png" />
+    <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png" />
+    <link rel="manifest" href="./manifest.webmanifest" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Noto+Sans+TC:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./src/styles/tokens.css" />
+    <link rel="stylesheet" href="./src/styles/layout.css" />
+    <link rel="stylesheet" href="./src/styles/components.css" />
+
+    <script>
+      (function () {
+        try {
+          var saved = localStorage.getItem('agent_quest_theme');
+          var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+          var theme = saved === 'dark' || saved === 'light' ? saved : (prefersDark ? 'dark' : 'light');
+          document.documentElement.setAttribute('data-theme', theme);
+          var meta = document.getElementById('meta-theme-color');
+          if (meta) meta.setAttribute('content', theme === 'dark' ? '#161a22' : '#f9f7f2');
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="app-shell" class="app-shell">
+      <header id="top-bar" class="top-bar" role="banner"></header>
+      <main id="main-stage" class="main-stage" role="main" tabindex="-1"></main>
+      <nav id="bottom-nav" class="bottom-nav" aria-label="主要學習導覽"></nav>
+    </div>
+
+    <div id="lightbox-modal" class="lightbox-modal" hidden aria-modal="true" role="dialog" aria-label="圖片放大檢視">
+      <button id="lightbox-close-btn" class="lightbox-close" type="button" aria-label="關閉圖片檢視">✕</button>
+      <img id="lightbox-image" class="lightbox-img" src="" alt="" />
+      <p id="lightbox-caption" class="lightbox-caption"></p>
+    </div>
+
+    <div id="toast-region" class="toast-region" aria-live="polite" aria-atomic="true"></div>
+
+    <script type="module" src="./src/main.js"></script>
+  </body>
+</html>
