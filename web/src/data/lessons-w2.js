@@ -28,7 +28,7 @@ export const LESSONS_W2 = [
           '3. 你的應用程式（或 MAF 框架）在本地／後端真正執行該函式拿到結果，再把結果餵回給 LLM 組織成自然語言回答！'
         ],
         image: {
-          src: './course-images/functioncalling-diagram.a84006fc287f6014.webp',
+          src: './course-images/functioncalling-diagram.png',
           caption: '點圖放大：Function Calling 在使用者、應用程式、LLM 與外部 API 間的標準四步循環'
         }
       },
@@ -42,7 +42,7 @@ export const LESSONS_W2 = [
           'OpenAPI 3.0 規格工具與 MCP Servers：只要有既有 REST API 的 OpenAPI 規格檔，免手寫包裝就能直接讓 Agent 呼叫！'
         ],
         image: {
-          src: './course-images/agent-service-in-action.34fb465c9a84659e.webp',
+          src: './course-images/agent-service-in-action.jpg',
           caption: 'Foundry Agent Service 整合模型、多種內建工具與外部 OpenAPI 端點'
         }
       },
@@ -264,7 +264,7 @@ export const LESSONS_W2 = [
           '第一次搜出來的段落其實跟問題無關，傳統 RAG 還是照吞不誤，產生看似有憑有據的幻覺。'
         ],
         image: {
-          src: './course-images/agentic-rag-core-loop.c8f4b85c26920f71.webp',
+          src: './course-images/agentic-rag-core-loop.png',
           caption: '點圖放大：Agentic RAG 的「規劃查詢 → 檢索 → 評估品質 → 必要時改寫重查」核心迴圈'
         }
       },
@@ -278,7 +278,7 @@ export const LESSONS_W2 = [
           '相關性自評與重試（Self-Correction）：讀完檢索結果發現沒寫到重點？主動換關鍵字再搜第二輪！'
         ],
         image: {
-          src: './course-images/self-correction.da87f3783b7f174b.webp',
+          src: './course-images/self-correction.png',
           caption: '當初次檢索結果不足以回答問題時，Agent 主動調整搜尋策略再查一次'
         }
       },
@@ -287,8 +287,21 @@ export const LESSONS_W2 = [
         title: '混合搜尋（Hybrid Search）＋ 語意重排序（Semantic Reranking）',
         body: '搭配 Azure AI Search 等現代檢索引擎時，別只單靠純向量（Vector）搜尋！結合 BM25 關鍵字搜尋（抓精準專有名詞、料號、法條編號）＋ 向量語意搜尋 ＋ Reranker 重排，準確度最高！',
         image: {
-          src: './course-images/tool-integration.0f569710b5c17c10.webp',
+          src: './course-images/tool-integration.png',
           caption: 'Agent 協調向量知識庫、關聯式資料庫與外部 API 的多工具檢索架構'
+        }
+      },
+      {
+        tag: '執行軌跡',
+        title: 'Agent Run 實戰追蹤：多步驟工具呼叫與耗時剖析',
+        body: '以複合問題「拿破崙家鄉目前天氣如何？」為例，Agent 必須先呼叫 `get_home_town` 查出科西嘉島阿雅克肖，再接力呼叫 `get_current_weather` 取得即時氣象：',
+        bullets: [
+          '透過追蹤（Trace）畫面可清楚看見每一輪 LLM 推論、工具呼叫耗時（如 3.646s）與 Token 用量。',
+          '當 Agentic RAG 答錯或卡關時，調出單次執行的工具輸入與輸出紀錄就是除錯最快的方法。'
+        ],
+        image: {
+          src: './course-images/AgentRunExample.png',
+          caption: '點圖放大：實際 Agent Run 追蹤畫面展示多步驟推理、工具串接與 Token 耗時'
         }
       }
     ],
@@ -483,7 +496,7 @@ export const LESSONS_W2 = [
           '知識庫下毒（KB Poisoning）、連環錯誤放大（Cascading Errors）與越權存取關鍵系統。'
         ],
         image: {
-          src: './course-images/understanding-threats.89edeada8a97fc0f.webp',
+          src: './course-images/understanding-threats.png',
           caption: '點圖放大：盤點 AI Agent 常見的越權操作、提示注入與資料外洩威脅'
         }
       },
@@ -497,7 +510,7 @@ export const LESSONS_W2 = [
           '輸出格式與語氣規範、以及安全兜底（Fail-safe）規則。'
         ],
         image: {
-          src: './course-images/system-message-framework.3a97368c92d11d68.webp',
+          src: './course-images/system-message-framework.png',
           caption: '結構化的 System Message 框架能大幅強化 Agent 行為邊界'
         }
       },
@@ -511,8 +524,21 @@ export const LESSONS_W2 = [
           'High Risk（charge 扣款、refund 退款、delete 刪除、send 對外發信）：強制暫停，必須真人核准（Approve / Deny）才能執行，未知動作預設歸為中高風險絕不盲目全開！'
         ],
         image: {
-          src: './course-images/human-in-the-loop.5f0068a678f62f4f.webp',
+          src: './course-images/human-in-the-loop.png',
           caption: 'Human-in-the-Loop 確保高影響動作永遠經過人類監督與日誌稽核'
+        }
+      },
+      {
+        tag: '提示詞強化',
+        title: 'Meta Prompting：用系統化疊代打造更嚴謹的安全提示詞',
+        body: '除了人工手調提示詞，還能建立 Meta Prompting 流程讓高階模型協助檢查漏洞、補充邊界案例：',
+        bullets: [
+          '先設計一份 Meta Prompt（定義安全目標與審查標準），再把初版基礎提示詞交給 LLM 檢視。',
+          '針對測試中出現的越獄或模糊地帶反覆疊代修正，讓行為規則越來越嚴密。'
+        ],
+        image: {
+          src: './course-images/building-a-metaprompting-system.png',
+          caption: '點圖放大：建立 Meta Prompting 系統的四步驟反覆疊代優化流程'
         }
       }
     ],
@@ -708,7 +734,7 @@ export const LESSONS_W2 = [
           '為每個子任務指派對應的工具或專責代理，並設定驗收條件。'
         ],
         image: {
-          src: './course-images/defining-goals-tasks.d70439e19e37c47a.webp',
+          src: './course-images/defining-goals-tasks.png',
           caption: '點圖放大：將高階目標（Goal）逐步拆解為明確可執行的子任務（Sub-tasks）'
         }
       },
@@ -929,7 +955,7 @@ export const LESSONS_W2 = [
           'Group Chat（群組會議）：由一位 Group Chat Manager 主持，讓「行程規劃師」、「預算控管官」與「在地美食家」輪流發言收斂出最佳方案！'
         ],
         image: {
-          src: './course-images/multi-agent-hand-off.4c5fb00ba6f8750a.webp',
+          src: './course-images/multi-agent-hand-off.png',
           caption: '點圖放大：Handoff 模式依使用者意圖將對話無縫轉交給對應領域專家 Agent'
         }
       },
@@ -942,8 +968,21 @@ export const LESSONS_W2 = [
           'Concurrent（平行同時跑）：一筆旅遊需求同時丟給航班、飯店、天氣三個 Agent 平行查詢，最後由 Aggregator 匯總，速度超快！'
         ],
         image: {
-          src: './course-images/multi-agent-group-chat.ec10f4cde556babd.webp',
+          src: './course-images/multi-agent-group-chat.png',
           caption: 'Group Chat 模式由協調者管理多位專家代理共同完成複雜方案'
+        }
+      },
+      {
+        tag: '經典編排 3',
+        title: 'Collaborative Filtering：多專員協作過濾與精準推薦',
+        body: '當任務需要從大量候選項目（商品、職缺、旅遊行程）中篩選最適合使用者的方案時，可讓多個專家代理共同聚焦於同一份 User Goal：',
+        bullets: [
+          '每位 Specialized AI Agent 各自依據不同維度（預算、個人偏好、即時評價或合規限制）進行過濾評分。',
+          '各自輸出篩選結果後匯聚整合，產出兼顧多方條件的高精準推薦清單。'
+        ],
+        image: {
+          src: './course-images/multi-agent-filtering.png',
+          caption: '點圖放大：Collaborative Filtering 模式讓多位專精 AI Agent 共同為 User Goal 篩選最佳解'
         }
       }
     ],
@@ -1139,7 +1178,7 @@ export const LESSONS_W2 = [
           '自我評估與修正（Self-Evaluation & Correction）：產出初稿後，對照檢核表打分數，不及格就重修再送出！'
         ],
         image: {
-          src: './course-images/importance-of-metacognition.b381afe9aae352f7.webp',
+          src: './course-images/importance-of-metacognition.png',
           caption: '點圖放大：後設認知讓 Agent 能察覺自身知識盲區、評估策略有效性並動態修正'
         }
       },
@@ -1157,7 +1196,7 @@ export const LESSONS_W2 = [
         title: '後設認知也包含「決定該用 RAG 還是直接塞 Context」！',
         body: '聰明的 Agent 還會評估資料規模與任務性質，動態決定策略：文件很短且需全局理解時直接放入 Context Window；知識庫龐大且隨時間變動時則切換啟動 Agentic RAG！',
         image: {
-          src: './course-images/rag-vs-context.9eae588520c00921.webp',
+          src: './course-images/rag-vs-context.png',
           caption: '比較何時適合使用動態檢索（RAG）與直接載入長脈絡（Context Loading）'
         }
       }

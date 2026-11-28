@@ -22,7 +22,7 @@ export const LESSONS_W1 = [
           'OpenAI 相容端點（如 MiniMax）：只要支援標準介面，也能輕鬆切換測試。'
         ],
         image: {
-          src: './course-images/forked-repo.33f27ca1901baa6a.webp',
+          src: './course-images/forked-repo.png',
           caption: '先 Fork 專案到自己的 GitHub 帳號，就能在 Codespaces 或本機自由修改實驗'
         }
       },
@@ -36,7 +36,7 @@ export const LESSONS_W1 = [
           '終端機執行 az login，搭配 DefaultAzureCredential 或 AzureCliCredential 完成 Entra ID 無金鑰驗證。'
         ],
         image: {
-          src: './course-images/project-endpoint.8cf04c9975bbfbf1.webp',
+          src: './course-images/project-endpoint.png',
           caption: '從 Microsoft Foundry Portal 複製 Project Endpoint 貼進 .env 即可連線'
         }
       },
@@ -274,7 +274,7 @@ export const LESSONS_W1 = [
           'Actuators（執行器）：實際對環境採取行動的手腳，例如送出訂位請求、發送通知。'
         ],
         image: {
-          src: './course-images/what-are-ai-agents.1ec8c4d548af601a.webp',
+          src: './course-images/what-are-ai-agents.png',
           caption: '點圖可放大：AI Agent 結合 LLM、Tools、Memory 與環境互動的核心構造'
         }
       },
@@ -298,7 +298,7 @@ export const LESSONS_W1 = [
           '隨回饋持續演進：能結合使用者偏好記憶（如「我習慣坐靠窗座位」）越用越貼心。'
         ],
         image: {
-          src: './course-images/when-to-use-ai-agents.54becb3bed74a479.webp',
+          src: './course-images/when-to-use-ai-agents.png',
           caption: '評估開放性、多步流程與持續改進需求，決定是否導入 AI Agent'
         }
       }
@@ -521,7 +521,7 @@ export const LESSONS_W1 = [
           '出錯時黑盒子一片，缺乏標準化 OpenTelemetry 追蹤（Tracing）。'
         ],
         image: {
-          src: './course-images/lesson-2-thumbnail.c65f44c93b8558df.webp',
+          src: './course-images/lesson-2-thumbnail.png',
           caption: 'Agent 框架幫你把工具串接、狀態管理、多代理協作與可觀測性標準化'
         }
       },
@@ -746,7 +746,7 @@ export const LESSONS_W1 = [
           'Agent（Core 核心素養）：擁抱不確定性（透明揭露信心度）、建立信任與把最終控制權留給使用者！'
         ],
         image: {
-          src: './course-images/agentic-design-principles.1cfdf8b6d3cc73c2.webp',
+          src: './course-images/agentic-design-principles.png',
           caption: '點圖放大：涵蓋 Space（空間連接）、Time（時間脈絡）與 Core（信任控制）的設計原則'
         }
       },

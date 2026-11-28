@@ -230,7 +230,7 @@ export const LESSONS_W4 = [
           'Agent Workflows：多步驟長時間執行的非同步工作流，支援斷點續跑與人工簽核等待。'
         ],
         image: {
-          src: './course-images/lesson-16-thumbnail.d78cace536bc5d50.webp',
+          src: './course-images/lesson-16-thumbnail.png',
           caption: '從單機原型升級為高可用、可自動擴展且成本可控的雲端生產系統'
         }
       },
@@ -446,7 +446,7 @@ export const LESSONS_W4 = [
           '零邊際 Token 帳單（Zero Cloud Cost）：用自己的 GPU / NPU / CPU 無限次開發測試與跑自動化腳本，帳單永遠 $0！'
         ],
         image: {
-          src: './course-images/lesson-17-thumbnail.f86434c595a408fc.webp',
+          src: './course-images/lesson-17-thumbnail.png',
           caption: '結合 Microsoft Foundry Local 與 Qwen SLM，在個人電腦打造全離線 AI 工程助手'
         }
       },

@@ -1,7 +1,7 @@
 {
   "name": "ai-agent-quest-tw",
   "private": true,
-  "version": "1.0.0",
+  "version": "1.1.0",
   "type": "module",
   "description": "AI Agent 繁中互動闖關學習網 — Microsoft AI Agents for Beginners (00-18) 台灣繁體中文行動學習版",
   "scripts": {
